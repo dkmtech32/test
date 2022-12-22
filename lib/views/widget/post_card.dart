@@ -381,6 +381,8 @@ Future<dynamic> commentBottomSheet(
                           ),
                           subtitle: Text(postController.comments[index].text),
                         )))),
+
+                        
             SizedBox(
               height: size.width / 20,
             ),
