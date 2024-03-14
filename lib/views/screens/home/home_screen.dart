@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(left: 13),
           child: Image.asset(
-            'assets/images/glitzUp logo.png',
+            'assets/images/logo.png',
             width: size.width * 0.33,
           ),
         ),
