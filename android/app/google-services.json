@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "450217372442",
+    "project_id": "sportscape-2453f",
+    "storage_bucket": "sportscape-2453f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450217372442:android:b449bfd9af2d54929b1aa3",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450217372442-bor0rvo0lj49s6hno6st15eqnmq0ifs8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_ip9iMWEvcfFchaUOrfY9l3z_K9pY9GY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450217372442-bor0rvo0lj49s6hno6st15eqnmq0ifs8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450217372442:android:822ae9bbfec0a5939b1aa3",
+        "android_client_info": {
+          "package_name": "com.sportscape.news"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450217372442-bor0rvo0lj49s6hno6st15eqnmq0ifs8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_ip9iMWEvcfFchaUOrfY9l3z_K9pY9GY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450217372442-bor0rvo0lj49s6hno6st15eqnmq0ifs8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
