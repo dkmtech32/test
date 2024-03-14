@@ -8,5 +8,5 @@ const Color kBlackColor = Brightness == Brightness.dark ?  Colors.white : Colors
 const Color kGreyColor = Colors.grey;
 // const Color profilePageColorLight =  Colors.white;
 const Color profilePageColordark =  Colors.black;
-const Color kRedColor = Colors.red;
+const Color kCyanColor = Color.fromARGB(255, 9, 104, 107);
 

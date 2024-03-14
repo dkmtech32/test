@@ -6,22 +6,22 @@ Widget postCard(Size size){
             padding: const EdgeInsets.all(8.0),
             child: Container(
               width: size.width,
-              decoration: const BoxDecoration(color: kBlackColor),
+              decoration: const BoxDecoration(color: Colors.transparent),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
                     leading: const CircleAvatar(
-                      backgroundColor: kWhiteColor,
+                      backgroundColor: Colors.amber,
                     ),
                     title: const Text('username'),
                     trailing:
-                        IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+                        IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert,)),
                   ),
                   Container(
                     height: 280,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        image: DecorationImage(image: AssetImage('assets/images/sachin.jpeg',),fit: BoxFit.cover),
                         borderRadius: BorderRadius.circular(20)),
                   ),
                   const SizedBox(

@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/login.png',
+                'assets/images/logo.png',
                 width: size.width * .55,
               ),
               const SizedBox(
@@ -43,22 +43,39 @@ class LoginScreen extends StatelessWidget {
               ),
               // const SizedBox(height: 15,),
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) => BottomNavBar(),
-                        ),
-                        (route) => false);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 22,
-                      ),
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => BottomNavBar(),
                     ),
-                  )),
+                    (route) => false,
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 9, 104, 107)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  ),
+                  textStyle: MaterialStateProperty.all<TextStyle>(
+                    const TextStyle(fontSize: 22),
+                  ),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 15,
               ),
@@ -120,12 +137,12 @@ class LoginScreen extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignupScreen(),
+                          builder: (context) => const SignupScreen(),
                         ));
                       },
                       child: const Text(
                         'Sign up',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 9, 104, 107)),
                       ))
                 ],
               )
