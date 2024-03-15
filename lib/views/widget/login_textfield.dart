@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/color.dart';
 
-Widget loginTextFeild(String hintText, bool obscureText) {
+Widget loginTextFeild(
+    String hintText, bool obscureText, TextEditingController textController) {
   return TextFormField(
+    controller: textController,
     decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-                color:
-                     kCyanColor)),
+            borderSide: const BorderSide(color: kCyanColor)),
         // enabledBorder: OutlineInputBorder(
         //   borderRadius: BorderRadius.circular(10),
         //   borderSide: const BorderSide(color:kBlackColor),

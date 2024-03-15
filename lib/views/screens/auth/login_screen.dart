@@ -5,7 +5,10 @@ import 'package:flutter_app/views/screens/auth/signup_screen.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +24,24 @@ class LoginScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/logo.png',
-                width: size.width * .55,
+                width: size.width * .4,
               ),
               const SizedBox(
                 height: 10,
               ),
-              loginTextFeild("Email or username", false),
+              loginTextFeild("Email or username", false,_emailTextController),
               const SizedBox(
                 height: 20,
               ),
-              loginTextFeild("Password", true),
+              loginTextFeild("Password", true, _passwordTextController),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                       onPressed: () {},
                       child: const Text(
-                        'Forgot password?',style: TextStyle(color: kGreyColor),
+                        'Forgot password?',
+                        style: TextStyle(color: kGreyColor),
                       ))
                 ],
               ),
@@ -52,8 +56,10 @@ class LoginScreen extends StatelessWidget {
                   );
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 9, 104, 107)),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Color.fromARGB(255, 9, 104, 107)),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                   padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   ),
@@ -137,12 +143,14 @@ class LoginScreen extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SignupScreen(),
+                          builder: (context) =>  SignupScreen(),
                         ));
                       },
                       child: const Text(
                         'Sign up',
-                        style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 9, 104, 107)),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 9, 104, 107)),
                       ))
                 ],
               )

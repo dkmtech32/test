@@ -3,7 +3,9 @@ import 'package:flutter_app/views/screens/auth/login_screen.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
 
 class OTPScreen extends StatelessWidget {
-  const OTPScreen({super.key});
+  OTPScreen({super.key});
+
+  TextEditingController _otpTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class OTPScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              loginTextFeild('Enter OTP', false),
+              loginTextFeild('Enter OTP', false, _otpTextController),
               const SizedBox(
                 height: 15,
               ),
@@ -32,7 +34,7 @@ class OTPScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
+                          builder: (context) =>  LoginScreen(),
                         ),
                         (route) => false);
                   },
