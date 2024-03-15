@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/themes.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main(List<String> args) {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
