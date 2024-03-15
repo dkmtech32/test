@@ -7,9 +7,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 13),
           child: Image.asset(

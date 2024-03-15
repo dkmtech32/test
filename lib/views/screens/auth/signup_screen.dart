@@ -7,7 +7,7 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: SafeArea(
           child: Center(
@@ -43,7 +43,7 @@ class SignupScreen extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => OTPScreen(),
+                      builder: (context) => const OTPScreen(),
                     ));
                   },
                   child: const Text(
