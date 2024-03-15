@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_app/views/widget/profile_page_button.dart';
+import 'package:flutter_app/views/widget/profile_grid_view.dart';
 import 'package:flutter_app/views/widget/user_detail.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -110,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                 buttonText: 'Edit profile'),
           ];
         },
-        body: Column(
+        body: const Column(
           children: [
             Expanded(
                 child: DefaultTabController(
@@ -126,12 +126,14 @@ class ProfileScreen extends StatelessWidget {
                           )
                         ]),
                         Expanded(
-                            child: TabBarView(
-                                children: [ListView.builder(
-                                  itemCount: 59,
-                                  itemBuilder: (context, index) {
-                                 return Text('data');
-                                },), Text('data2')]))
+                            child: TabBarView(children: [
+                          ProfileGridView(
+                            itemCount: 30,
+                          ),
+                          ProfileGridView(
+                            itemCount: 30,
+                          ),
+                        ]))
                       ],
                     )))
           ],
