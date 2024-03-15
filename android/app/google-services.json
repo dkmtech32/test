@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:327956457228:android:359917786d6113b4550b29",
+        "mobilesdk_app_id": "1:327956457228:android:0694fbf7ee68644a550b29",
         "android_client_info": {
-          "package_name": "com.example.flutter_app"
+          "package_name": "com.example.mobilebookingcourt"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "327956457228-g5vl67hm5kd83vqb9sal24k2o6ilhoqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCE37Xv7aORInMRDPwDiiIgkT7bH5BTfeQ"
@@ -20,7 +25,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327956457228-g5vl67hm5kd83vqb9sal24k2o6ilhoqi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327956457228:android:5f5274d9195e7937550b29",
+        "android_client_info": {
+          "package_name": "com.example.sportscape"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327956457228-g5vl67hm5kd83vqb9sal24k2o6ilhoqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE37Xv7aORInMRDPwDiiIgkT7bH5BTfeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327956457228-g5vl67hm5kd83vqb9sal24k2o6ilhoqi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
