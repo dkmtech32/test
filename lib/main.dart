@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/themes.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
+import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +29,13 @@ class MyApp extends StatelessWidget {
           ? darkTheme
           : lightTheme,
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),builder: (context, snapshot) {
+            if(snapshot.hasData){
+              return BottomNavBar();
+            }else{
+              return LoginScreen();
+            }
+          },) ,
     );
   }
 }

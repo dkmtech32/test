@@ -28,19 +28,12 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   }
 
   void signupUser() async {
-    FirebaseAuthMethods(FirebaseAuth.instance)
+    await FirebaseAuthMethods(FirebaseAuth.instance)
         .signUpWithEmail(
       email: _emailTextController.text,
       password: _passwordTextController.text,
       context: context,
-    )
-        .then((value) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => LoginScreen(),
-      )).onError((error, stackTrace)  {
-        return const SnackBar(content: Text('data'));
-      });
-    });
+    );
   }
 
   @override
