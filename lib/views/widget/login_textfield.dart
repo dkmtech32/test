@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/color.dart';
 
-Widget loginTextFeild(
-    String hintText, bool obscureText, TextEditingController textController) {
+Widget loginTextFeild(String hintText, bool obscureText,
+    TextEditingController textController, String? validator(String? value)) {
   return TextFormField(
     controller: textController,
     decoration: InputDecoration(
@@ -20,5 +20,6 @@ Widget loginTextFeild(
         // hintText: hintText,
         ),
     obscureText: obscureText,
+    validator: validator,
   );
 }

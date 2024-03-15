@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
-import 'package:flutter_app/views/widget/login_textfield.dart';
 
 class OTPScreen extends StatelessWidget {
   OTPScreen({super.key});
@@ -26,7 +25,7 @@ class OTPScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              loginTextFeild('Enter OTP', false, _otpTextController),
+              // loginTextFeild('Enter OTP', false, _otpTextController,),
               const SizedBox(
                 height: 15,
               ),
