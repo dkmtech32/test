@@ -43,9 +43,10 @@ class FirebaseAuthMethods {
         email: email,
         password: password,
      ).then((value) {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
         builder: (context) => BottomNavBar(),
-      ));
+      ),
+      (route) =>false);
     });
       // if(_auth.currentUser!.emailVerified){
       //   showSnackbar(context, 'Email not verified');

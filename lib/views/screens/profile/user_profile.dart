@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:flutter_app/views/widget/profile_grid_view.dart';
 import 'package:flutter_app/views/widget/user_detail.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/core/constants.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -27,8 +30,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       (route) => false);
                 });
+                await googleSignIn.disconnect();
               },
-              icon: const Icon(Icons.menu))
+              icon: const Icon(Icons.logout))
         ],
       ),
       body: NestedScrollView(
