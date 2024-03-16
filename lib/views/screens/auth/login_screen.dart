@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
@@ -7,6 +10,8 @@ import 'package:flutter_app/views/screens/auth/signup_screen.dart';
 import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart';
+import 'package:logger/logger.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -41,8 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     //               color: Theme.of(context).primaryColor,
     //               size: 50,
     //             ),
-                
-           
+
     //       ),
     //     );
     //   },);
@@ -52,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context);
   }
 
- 
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
 
@@ -69,19 +72,40 @@ class _LoginScreenState extends State<LoginScreen> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-   try {
-     await FirebaseAuth.instance.signInWithCredential(credential).then((value) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => BottomNavBar(),
-          ),
-          (route) => false);
-    });
-   } catch (e) {
-    print(e.toString());
-     
-   }
 
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential)
+          .then((value) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => BottomNavBar(),
+            ),
+            (route) => false);
+        return value;
+      });
+
+      User? user = userCredential.user;
+      var logger = Logger();
+      logger.i(user?.email);
+      logger.i(user?.uid);
+
+      if (user != null) {
+        var url =
+            Uri.https('sportscape.onrender.com', 'api/v1/auth/google-auth');
+        var response = await post(url, body: {
+          'email': user.email,
+          'username': user.uid,
+        });
+
+        final accessToken = jsonDecode(response.body)['data']['accessToken'];
+
+        var logger = Logger();
+        logger.d('response access token: $accessToken');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -107,12 +131,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10,
                   ),
                   loginTextFeild("Email Address", false, _emailTextController,
-                      validateEmail,context),
+                      validateEmail, context),
                   const SizedBox(
                     height: 20,
                   ),
                   loginTextFeild("Password", true, _passwordTextController,
-                      validatePassword,context),
+                      validatePassword, context),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -128,7 +152,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
-                          
                           loginUser();
                         }
                         // Navigator.of(context).pushAndRemoveUntil(
@@ -223,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: const Text(
                             'Sign up',
-                            style: TextStyle(fontSize: 18,color: kCyanColor),
+                            style: TextStyle(fontSize: 18, color: kCyanColor),
                           ))
                     ],
                   )

@@ -62,14 +62,16 @@ class FirebaseAuthMethods {
       var logger = Logger();
       logger.d('user: $user');
       if (user != null) {
-        var url =Uri.https('sportscape.onrender.com', 'api/v1/auth/google-auth');
+        var url =
+            Uri.https('sportscape.onrender.com', 'api/v1/auth/google-auth');
         var response = await post(url, body: {
           'email': user.email,
           'uid': user.uid,
         });
-        var logger =Logger();
-        logger.d('response access token: ${response.body}');
+        final accessToken = jsonDecode(response.body)['data']['accessToken'];
 
+        var logger = Logger();
+        logger.d('response access token: $accessToken');
       }
     } on FirebaseAuthException catch (e) {
       Navigator.of(context, rootNavigator: true).pop();
@@ -101,7 +103,7 @@ class FirebaseAuthMethods {
           );
         },
       );
-      UserCredential userCredential= await _auth
+      UserCredential userCredential = await _auth
           .signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -112,26 +114,26 @@ class FirebaseAuthMethods {
               builder: (context) => BottomNavBar(),
             ),
             (route) => false);
-            return value;
+        return value;
       });
-      
+
       User? user = userCredential.user;
       var logger = Logger();
       logger.i(user?.email);
       logger.i(user?.uid);
 
       if (user != null) {
-        var url =Uri.https('sportscape.onrender.com', 'api/v1/auth/google-auth');
+        var url =
+            Uri.https('sportscape.onrender.com', 'api/v1/auth/google-auth');
         var response = await post(url, body: {
           'email': user.email,
           'username': user.uid,
         });
-        var jsondata = response.body;
-        var parsedjson = jsonDecode(jsondata);
-        var accessToken = parsedjson['data']['accessToken'];
-        var logger =Logger();
-        logger.d('response access token: $accessToken');
 
+        final accessToken = jsonDecode(response.body)['data']['accessToken'];
+
+        var logger = Logger();
+        logger.d('response access token: $accessToken');
       }
       // if(_auth.currentUser!.emailVerified){
       //   showSnackbar(context, 'Email not verified');
