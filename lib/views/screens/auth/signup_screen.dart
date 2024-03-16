@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+// import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:flutter_app/views/screens/auth/otp_screen.dart';
+// import 'package:flutter_app/views/screens/auth/otp_screen.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
-import 'package:flutter_app/views/screens/auth/login_screen.dart';
+// import 'package:flutter_app/views/screens/auth/login_screen.dart';
 
 import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 class SignupScreen extends StatefulWidget {
@@ -82,11 +82,11 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                   // const SizedBox(
                   //   height: 20,
                   // ),
-                  loginTextFeild('Email Address', false, _emailTextController,validateEmail),
+                  loginTextFeild('Email Address', false, _emailTextController,validateEmail,context),
                   const SizedBox(
                     height: 20,
                   ),
-                  loginTextFeild('Password', true, _passwordTextController,validatePassword),
+                  loginTextFeild('Password', true, _passwordTextController,validatePassword,context),
                   const SizedBox(
                     height: 20,
                   ),

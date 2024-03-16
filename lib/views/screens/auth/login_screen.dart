@@ -1,17 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
-
-import 'package:flutter_app/views/screens/auth/signup_screen.dart';
-import 'package:flutter_app/views/widget/login_textfield.dart';
-import 'package:flutter_app/views/screens/home/home_screen.dart';
-import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
-
 import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
+import 'package:flutter_app/views/screens/auth/signup_screen.dart';
+import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
+import 'package:flutter_app/views/widget/login_textfield.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -25,8 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextEditingController _passwordTextController = TextEditingController();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   void dispose() {
     // TODO: implement dispose
@@ -36,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginUser() async {
-     // showDialog(context: context,
+    // showDialog(context: context,
     //   barrierDismissible: false, builder: (BuildContext context) {
     //     return Dialog(
     //       backgroundColor: Colors.transparent,
@@ -47,8 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
     //               color: Theme.of(context).primaryColor,
     //               size: 50,
     //             ),
-
-
+                
+           
     //       ),
     //     );
     //   },);
@@ -58,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context);
   }
 
+ 
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
 
@@ -74,19 +69,19 @@ class _LoginScreenState extends State<LoginScreen> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    try {
-      await FirebaseAuth.instance
-          .signInWithCredential(credential)
-          .then((value) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => BottomNavBar(),
-            ),
-            (route) => false);
-      });
-    } catch (e) {
-      print(e.toString());
-    }
+   try {
+     await FirebaseAuth.instance.signInWithCredential(credential).then((value) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => BottomNavBar(),
+          ),
+          (route) => false);
+    });
+   } catch (e) {
+    print(e.toString());
+     
+   }
+
   }
 
   @override
@@ -99,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey,
+              key: _formkey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,12 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10,
                   ),
                   loginTextFeild("Email Address", false, _emailTextController,
-                      validateEmail),
+                      validateEmail,context),
                   const SizedBox(
                     height: 20,
                   ),
                   loginTextFeild("Password", true, _passwordTextController,
-                      validatePassword),
+                      validatePassword,context),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -132,7 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   // const SizedBox(height: 15,),
                   ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formkey.currentState!.validate()) {
+                          
                           loginUser();
                         }
                         // Navigator.of(context).pushAndRemoveUntil(
@@ -148,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           "Login",
                           style: TextStyle(
                             fontSize: 22,
+                            color: kCyanColor,
                           ),
                         ),
                       )),
@@ -179,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                   Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
@@ -226,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: const Text(
                             'Sign up',
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: kCyanColor),
                           ))
                     ],
                   )

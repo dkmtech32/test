@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:flutter_app/views/widget/snackbar.dart';
-import 'package:flutter_app/views/screens/auth/login_screen.dart';
+import 'package:flutter_app/views/screens/addProfile/add_detail_screen.dart';
 import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
 
 class FirebaseAuthMethods {
@@ -43,9 +43,11 @@ class FirebaseAuthMethods {
       )
           .then((value) {
         Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ))
+            .pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) =>  AddDetails(),
+                ),
+                (route) => false)
             .onError((error, stackTrace) {
           return const SnackBar(content: Text('data'));
         });
