@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 import 'package:flutter_app/views/widget/snackbar.dart';
 import 'package:flutter_app/views/screens/addProfile/add_detail_screen.dart';
 import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
+import 'package:logger/logger.dart';
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
@@ -36,7 +41,7 @@ class FirebaseAuthMethods {
           );
         },
       );
-      await _auth
+      UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -45,13 +50,27 @@ class FirebaseAuthMethods {
         Navigator.of(context)
             .pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) =>  AddDetails(),
+                  builder: (context) => AddDetails(),
                 ),
                 (route) => false)
             .onError((error, stackTrace) {
           return const SnackBar(content: Text('data'));
         });
+        return value;
       });
+      User? user = userCredential.user;
+      var logger = Logger();
+      logger.d('user: $user');
+      if (user != null) {
+        var url =Uri.https('sportscape.onrender.com', 'api/v1/auth/google-auth');
+        var response = await post(url, body: {
+          'email': user.email,
+          'uid': user.uid,
+        });
+        var logger =Logger();
+        logger.d('response access token: ${response.body}');
+
+      }
     } on FirebaseAuthException catch (e) {
       Navigator.of(context, rootNavigator: true).pop();
       showSnackbar(context, e.message!);
@@ -82,7 +101,7 @@ class FirebaseAuthMethods {
           );
         },
       );
-      await _auth
+      UserCredential userCredential= await _auth
           .signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -93,7 +112,27 @@ class FirebaseAuthMethods {
               builder: (context) => BottomNavBar(),
             ),
             (route) => false);
+            return value;
       });
+      
+      User? user = userCredential.user;
+      var logger = Logger();
+      logger.i(user?.email);
+      logger.i(user?.uid);
+
+      if (user != null) {
+        var url =Uri.https('sportscape.onrender.com', 'api/v1/auth/google-auth');
+        var response = await post(url, body: {
+          'email': user.email,
+          'username': user.uid,
+        });
+        var jsondata = response.body;
+        var parsedjson = jsonDecode(jsondata);
+        var accessToken = parsedjson['data']['accessToken'];
+        var logger =Logger();
+        logger.d('response access token: $accessToken');
+
+      }
       // if(_auth.currentUser!.emailVerified){
       //   showSnackbar(context, 'Email not verified');
       // }
