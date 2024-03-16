@@ -6,6 +6,7 @@ import 'package:flutter_app/views/screens/auth/login_screen.dart';
 import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       theme: MediaQuery.of(context).platformBrightness == Brightness.dark
           ? darkTheme
           : lightTheme,

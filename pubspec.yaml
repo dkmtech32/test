@@ -46,6 +46,8 @@ dependencies:
   firebase_core: ^2.27.1
   http: ^1.2.1
   logger: ^2.1.0
+  firebase_app_check: ^0.2.1+18
+  cloud_firestore: ^4.15.9
 
 dev_dependencies:
   flutter_test:

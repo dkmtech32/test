@@ -3,7 +3,7 @@ import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
 
 class BottomNavBar extends StatefulWidget {
-  BottomNavBar({super.key});
+  const BottomNavBar({super.key});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
