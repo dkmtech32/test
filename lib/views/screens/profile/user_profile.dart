@@ -22,6 +22,8 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () async {
+                googleSignIn.disconnect();
+
                 await FirebaseAuth.instance.signOut().then((value) {
                   Navigator.pushAndRemoveUntil(
                       context,
@@ -30,7 +32,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       (route) => false);
                 });
-                await googleSignIn.disconnect();
               },
               icon: const Icon(Icons.logout))
         ],

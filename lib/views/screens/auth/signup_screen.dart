@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:flutter_app/views/screens/auth/otp_screen.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
+
+import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 class SignupScreen extends StatefulWidget {
   SignupScreen({super.key});
   @override
