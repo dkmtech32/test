@@ -4,7 +4,7 @@ import 'package:flutter_app/core/color.dart';
 class UserTitle extends StatelessWidget {
   final String text;
   final String? time;
-  UserTitle({
+  const UserTitle({
     super.key,
     required this.text,
     this.time,
@@ -21,7 +21,9 @@ class UserTitle extends StatelessWidget {
           title: RichText(
               text: TextSpan(children: [
             TextSpan(text: text),
-            TextSpan(text: '  ' + (time?? ''), style: TextStyle(color: kGreyColor))
+            TextSpan(
+                text: '  ${time ?? ''}',
+                style: const TextStyle(color: kGreyColor))
           ]))),
     );
   }

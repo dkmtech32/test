@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_app/views/widget/profile_grid_view.dart';
 import 'package:flutter_app/views/widget/user_detail.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
+import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 
 import 'package:flutter_app/core/constants.dart';
 
@@ -13,11 +14,13 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<FirebaseAuthMethods>().currentUser;
+
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'username',
+        title: Text(
+          user!.uid,
         ),
         actions: [
           IconButton(
@@ -126,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             UserDetails(
                 size: size,
-                userName: 'userName',
+                userName: 'username',
                 bio: 'bio',
                 buttonText: 'Edit profile'),
           ];

@@ -5,10 +5,10 @@ import 'package:flutter_app/views/screens/search/search_screen.dart';
 // import 'package:flutter_app/views/screens/uploadpost_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 final screens = [
-  HomeScreen(),
-  SearchScreen(),
+  const HomeScreen(),
+  const SearchScreen(),
   // UploadPost(),
-  NotificationScreen(),
-  ProfileScreen()
+  const NotificationScreen(),
+  const ProfileScreen()
 ];
 final googleSignIn= GoogleSignIn();
