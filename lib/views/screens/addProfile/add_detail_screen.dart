@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'widgets/detail_text_field.dart';
 import 'package:flutter_app/controller/user_controller.dart';
 import 'package:flutter_app/model/user/user_model.dart';
-import 'package:flutter_app/services/auth/users/user_detail.dart';
+import 'package:flutter_app/services/users/user_detail.dart';
 
 // ignore: must_be_immutable
 class AddDetails extends StatelessWidget {
