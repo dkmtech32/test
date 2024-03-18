@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+
 
 // import 'package:flutter_app/views/screens/auth/otp_screen.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
 // import 'package:flutter_app/views/screens/auth/login_screen.dart';
+import 'package:flutter_app/core/color.dart';
 
 import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
-import 'package:provider/provider.dart';
 
 bool hiddentextField = false;
 
@@ -73,17 +75,58 @@ class _SignupScreenState extends State<SignupScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                loginTextField(
-                    'otp',
-                    false,
-                    _otpTextController,
-                    validateOTP,
-                    context,
-                    const Text('Verify OTP'),
-                    _emailTextController.text),
-                const SizedBox(
-                  height: 20,
-                ),
+                // loginTextField(
+                //     'otp',
+                //     false,
+                //     _otpTextController,
+                //     validateOTP,
+                //     context,
+                //     const Text('Verify OTP'),
+                //     _emailTextController.text),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.withOpacity(0.2), // Shadow color
+                            spreadRadius: 2, // Spread radius
+                            blurRadius: 5, // Blur radius
+                            offset: const Offset(0, 3),
+                            blurStyle: BlurStyle.inner),
+                      ],
+                    ),
+                    child: TextFormField(
+                      controller: _otpTextController,
+                      decoration: InputDecoration(
+                          fillColor: Theme.of(context).primaryColor,
+                          filled: true,
+                          suffix: InkWell(
+                              onTap: () {
+                                hiddentextField = verifyOTP(
+                                    _emailTextController.text.trim(),
+                                    _otpTextController.text,
+                                    context);
+                                if (hiddentextField) {
+                                  setState(() {
+                                    hiddentextField = true;
+                                  });
+                                }
+                              },
+                              child: Text('Verify OTP')),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(color: kCyanColor)),
+                          labelText: 'Otp'),
+                      obscureText: false,
+                      validator: validateOTP,
+                    ),
+                  ),
                 Visibility(
                     visible: hiddentextField,
                     child: loginTextField(
