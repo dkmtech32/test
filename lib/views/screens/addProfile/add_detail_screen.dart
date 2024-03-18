@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/detail_text_field.dart';
 import 'package:flutter_app/controller/user_controller.dart';
 import 'package:flutter_app/model/user/user_model.dart';
 import 'package:flutter_app/services/users/user_detail.dart';
 import 'package:flutter_app/services/users/add_image.dart';
+import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 
 // ignore: must_be_immutable
 class AddDetails extends StatefulWidget {
@@ -69,6 +71,7 @@ class _AddDetailsState extends State<AddDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final signeduser = context.read<FirebaseAuthMethods>().currentUser;
     Size size = MediaQuery.sizeOf(context);
     return Form(
       key: _formkey,
@@ -81,6 +84,7 @@ class _AddDetailsState extends State<AddDetails> {
                 onPressed: () {
                   if (_formkey.currentState!.validate()) {
                     final user = UserModel(
+                        email: signeduser!.email!,
                         imagePath: imageUrl != null
                             ? imageUrl!
                             : 'assets/images/download.png',

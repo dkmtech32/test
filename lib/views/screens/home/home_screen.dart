@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/constants.dart';
+import 'package:flutter_app/views/screens/auth/login_screen.dart';
 
 import 'package:flutter_app/views/widget/post_card.dart';
 
@@ -23,7 +26,15 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(Icons.messenger_outline_rounded),
           ),
+          IconButton(onPressed: () async{
+             googleSignIn.disconnect();
+           await FirebaseAuth.instance.signOut().then((value) {
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  LoginScreen(),), (route) => false);
+           });
+    
+          }, icon: const Icon(Icons.logout))
         ],
+       
       ),
       body: SafeArea(
           child: ListView.builder(
