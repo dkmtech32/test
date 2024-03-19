@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter_app/core/constants.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
-
 import 'package:flutter_app/views/widget/post_card.dart';
+import 'package:flutter_app/controller/user_provider/user_provider.dart';
+import 'package:flutter_app/services/users/user_detail.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

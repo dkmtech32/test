@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_app/model/post/post_model.dart';
+import 'package:flutter_app/controller/user_provider/user_provider.dart';
+import 'package:flutter_app/model/user/user_model.dart';
 
 class UploadPost extends StatefulWidget {
   const UploadPost({super.key});
@@ -12,6 +18,7 @@ class UploadPost extends StatefulWidget {
 class _UploadPostState extends State<UploadPost> {
   String? imagePath;
   String? imageUrl;
+  final TextEditingController _captionController = TextEditingController();
 
   Future<void> selectImage(String clicked) async {
     final XFile? imagePicked;
@@ -27,6 +34,36 @@ class _UploadPostState extends State<UploadPost> {
 
       // imageUrl =await addProfileImge(imagePicked);
     }
+  }
+
+  void addPostToFirestore() async {
+    // print(logged.fullName);
+
+    // final userProvider = Provider.of<UserProvider>(context, listen: false).fetchUserDetailsFromFireStore(FirebaseAuth.instance.currentUser!.email!);
+    // print(userProvider.);
+    //    final userProvider = Provider.of<UserProvider>(context);
+    // await userProvider.fetchUserDetailsFromFireStore(FirebaseAuth.instance.currentUser!.email!);
+    // final UserModel? loggedUser = userProvider.currentUser;
+    // print(loggedUser!.fullName);
+    // print(FirebaseAuth.instance.currentUser!.email);
+
+    // if (currentUser != null) {
+    //   String username = currentUser.userName;
+
+    //   PostModel newPost = PostModel(
+    //       username: username,
+    //       caption: _captionController.text,
+    //       imagePath: imagePath!,
+    //       timestamp: DateTime.now(),
+    //       likes: [],
+    //       comments: []);
+
+    //       FirebaseFirestore.instance.collection('posts').add(newPost.toJson()).then((value) {
+    //         print('post added');
+    //       }).onError((error, stackTrace) {
+    //         print(error.toString());
+    //       });
+    // }
   }
 
   @override
@@ -118,7 +155,9 @@ class _UploadPostState extends State<UploadPost> {
                   height: size.width / 16,
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      addPostToFirestore();
+                    },
                     child: const Text(
                       'Post',
                       style: TextStyle(fontSize: 20),
