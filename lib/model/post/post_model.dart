@@ -1,4 +1,4 @@
-import 'package:flutter_app/model/comment/comment_model.dart  ';
+import 'package:flutter_app/model/comment/comment_model.dart';
 
 class PostModel {
   final String? postId;
@@ -7,7 +7,7 @@ class PostModel {
   final String? caption;
   final DateTime timestamp;
   final List<String> likes;
-  final List<Comment> comments;
+  final List<CommentModel> comments;
 
   PostModel({
     this.postId,
