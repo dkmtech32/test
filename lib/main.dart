@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_app/core/themes.dart';
 import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 import 'package:flutter_app/views/screens/auth/auth_wrapper.dart';
-import 'package:flutter_app/controller/text_field_controller.dart';
-import 'package:flutter_app/controller/text_field_validator_controller.dart';
-import 'package:flutter_app/controller/user_provider/user_provider.dart';
+import 'package:flutter_app/controller/text_field/text_field_controller.dart';
+import 'package:flutter_app/controller/text_field/text_field_validator_controller.dart';
+import 'package:flutter_app/controller/user/user_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Platform.isAndroid

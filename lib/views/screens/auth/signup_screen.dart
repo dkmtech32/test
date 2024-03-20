@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_app/controller/text_field_validator_controller.dart';
+import 'package:flutter_app/controller/text_field/text_field_validator_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 // import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_app/views/widget/login_textfield.dart';
 import 'package:flutter_app/core/color.dart';
-import 'package:flutter_app/controller/text_field_controller.dart';
+import 'package:flutter_app/controller/text_field/text_field_controller.dart';
 
 import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 

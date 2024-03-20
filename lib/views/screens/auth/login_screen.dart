@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import 'package:flutter_app/controller/text_field_validator_controller.dart';
+import 'package:flutter_app/controller/text_field/text_field_validator_controller.dart';
 import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 import 'package:flutter_app/views/screens/auth/signup_screen.dart';

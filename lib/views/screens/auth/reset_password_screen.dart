@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/auth/forgot_password.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
-import 'package:flutter_app/controller/text_field_validator_controller.dart';
+import 'package:flutter_app/controller/text_field/text_field_validator_controller.dart';
 
 import 'package:provider/provider.dart';
 

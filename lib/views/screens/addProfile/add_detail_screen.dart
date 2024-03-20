@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'widgets/detail_text_field.dart';
 import 'package:flutter_app/core/constants.dart';
-import 'package:flutter_app/controller/user_controller.dart';
+import 'package:flutter_app/controller/user/user_controller.dart';
 import 'package:flutter_app/model/user/user_model.dart';
 import 'package:flutter_app/services/users/user_detail.dart';
 import 'package:flutter_app/services/users/add_image.dart';
@@ -90,6 +90,7 @@ class _AddDetailsState extends State<AddDetails> {
                         coverImage: coverImage,
                         fullName: fullNameController.text.trim(),
                         userName: userNameController.text.trim(),
+                        likedPosts: [],
                         bio: bioController.text.isNotEmpty
                             ? bioController.text.trim()
                             : '');

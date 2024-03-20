@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_app/controller/user_controller.dart';
+import 'package:flutter_app/controller/user/user_controller.dart';
 import 'package:flutter_app/model/user/user_model.dart';
 import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
 

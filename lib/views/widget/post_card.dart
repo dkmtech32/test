@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controller/user_provider/user_provider.dart';
+import 'package:flutter_app/controller/post/post_controller.dart';
+import 'package:flutter_app/controller/user/user_provider.dart';
 import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
 import 'package:flutter_app/model/post/post_model.dart';
@@ -9,6 +11,7 @@ import 'package:provider/provider.dart';
 Widget postCard(Size size, PostModel post, BuildContext context) {
   final userProvider = Provider.of<UserProvider>(context);
   final TextEditingController commentController = TextEditingController();
+  final PostController postController = PostController();
 
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -60,7 +63,11 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
           Row(
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print(FirebaseAuth.instance.currentUser!.email!);
+                    postController.likeButtonClicked(post.postId!,
+                        FirebaseAuth.instance.currentUser!.email!);
+                  },
                   icon: const Icon(
                     Icons.favorite_outline,
                     size: 28,

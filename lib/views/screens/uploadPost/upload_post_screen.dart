@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_app/model/post/post_model.dart';
-import 'package:flutter_app/controller/user_provider/user_provider.dart';
+import 'package:flutter_app/controller/user/user_provider.dart';
 import 'package:flutter_app/model/user/user_model.dart';
 import 'package:flutter_app/services/post/upload_post.dart';
 
@@ -36,7 +36,7 @@ class _UploadPostState extends State<UploadPost> {
         imagePath = imagePicked!.path;
       });
 
-      imageUrl = await addPostImage(imagePicked, username);
+      imageUrl = await FireBasePostService().addPostImage(imagePicked, username);
     }
   }
 
