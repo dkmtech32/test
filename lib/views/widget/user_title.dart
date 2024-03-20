@@ -24,10 +24,11 @@ class UserTitle extends StatelessWidget {
           ),
           title: RichText(
               text: TextSpan(children: [
-            TextSpan(text: text),
+            TextSpan(text: text,
+            style: const TextStyle(color: kBlackColor, fontSize: 15)),
             TextSpan(
                 text: '  ${time ?? ''}',
-                style: const TextStyle(color: kGreyColor))
+                style: const TextStyle(color: kBlackColor, fontSize: 12))
           ]))),
     );
   }

@@ -51,6 +51,7 @@ dependencies:
   intl: ^0.18.1
   timeago: ^3.5.0
   omni_datetime_picker: ^1.0.9
+  awesome_notifications: ^0.8.2
 
 dev_dependencies:
   flutter_test:

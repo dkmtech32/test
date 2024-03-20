@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -28,6 +29,7 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
       endDateTime[0].split("-")[2] + "/" + endDateTime[0].split("-")[1];
   String endTime =
       endDateTime[1].split(":")[0] + ":" + endDateTime[1].split(":")[1];
+
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -211,6 +213,12 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
               Obx(
                 () => IconButton(
                     onPressed: () {
+                      AwesomeNotifications().createNotification(
+                          content: NotificationContent(
+                              id: 10,
+                              channelKey: 'basic_channel',
+                              title: 'You liked a post',
+                              body: 'You liked ${post.username}\'s post'));
                       postController.likeButtonClicked(post.postId!,
                           FirebaseAuth.instance.currentUser!.email!, post);
                     },
@@ -248,6 +256,12 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
                   ? Obx(
                       () => IconButton(
                           onPressed: () {
+                            AwesomeNotifications().createNotification(
+                          content: NotificationContent(
+                              id: 10,
+                              channelKey: 'basic_channel',
+                              title: 'You applied to a session',
+                              body: 'You applied to ${post.username}\'s post'));
                             postController.applyButtonClicked(
                                 post.postId!,
                                 FirebaseAuth.instance.currentUser!.email!,
