@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/detail_text_field.dart';
+import 'package:flutter_app/core/constants.dart';
 import 'package:flutter_app/controller/user_controller.dart';
 import 'package:flutter_app/model/user/user_model.dart';
 import 'package:flutter_app/services/users/user_detail.dart';
@@ -85,9 +86,8 @@ class _AddDetailsState extends State<AddDetails> {
                   if (_formkey.currentState!.validate()) {
                     final user = UserModel(
                         email: signeduser!.email!,
-                        imagePath: imageUrl != null
-                            ? imageUrl!
-                            : 'assets/images/download.png',
+                        profilePic: imageUrl != null ? imageUrl! : profileImage,
+                        coverImage: coverImage,
                         fullName: fullNameController.text.trim(),
                         userName: userNameController.text.trim(),
                         bio: bioController.text.isNotEmpty

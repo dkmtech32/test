@@ -1,29 +1,30 @@
-import 'dart:math';
-
 class UserModel {
   final String? id;
   final String email;
   final String fullName;
   final String userName;
-  final String imagePath;
+  final String profilePic;
+  final String coverImage;
   final String? bio;
 
-  UserModel({
+  UserModel( { required this.email,
     this.id,
-    required this.email,
     required this.fullName,
     required this.userName,
-    required this.imagePath,
+    required this.profilePic,
+    required this.coverImage,
     this.bio,
   });
 
-  toJson() {
+
+  toJson(){
     return {
       "email": email,
       "full name": fullName,
       "username": userName,
       "bio": bio,
-      "image path": imagePath,
+      "image path": profilePic,
+      "cover image": coverImage
     };
   }
 }

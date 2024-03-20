@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_app/model/post/post_model.dart';
 import 'package:flutter_app/controller/user_provider/user_provider.dart';
 import 'package:flutter_app/model/user/user_model.dart';
-
+import 'package:flutter_app/services/post/upload_post.dart';
 
 class UploadPost extends StatefulWidget {
   const UploadPost({super.key});
@@ -40,38 +40,31 @@ class _UploadPostState extends State<UploadPost> {
     }
   }
 
-  void addPostToFirestore(String username) async {
-    // print(logged.fullName);
+  // void addPostToFirestore(String username) async {
+  //   print("image $imageUrl");
 
-    // final userProvider = Provider.of<UserProvider>(context, listen: false).fetchUserDetailsFromFireStore(FirebaseAuth.instance.currentUser!.email!);
-    // print(userProvider.);
-    //    final userProvider = Provider.of<UserProvider>(context);
-    // await userProvider.fetchUserDetailsFromFireStore(FirebaseAuth.instance.currentUser!.email!);
-    // final UserModel? loggedUser = userProvider.currentUser;
-    // print(loggedUser!.fullName);
-    // print(FirebaseAuth.instance.currentUser!.email);
+  //   PostModel newPost = PostModel(
+  //       username: username,
+  //       caption: _captionController.text,
+  //       imagePath: imageUrl!,
+  //       timestamp: DateTime.now(),
+  //       likes: [],
+  //       comments: []);
 
-    // if (currentUser != null) {
-    //   String username = currentUser.userName;
-
-    PostModel newPost = PostModel(
-        username: username,
-        caption: _captionController.text,
-        imagePath: imagePath!,
-        timestamp: DateTime.now(),
-        likes: [],
-        comments: []);
-
-    FirebaseFirestore.instance
-        .collection('posts')
-        .add(newPost.toJson())
-        .then((value) {
-      print('post added');
-    }).onError((error, stackTrace) {
-      print(error.toString());
-    });
-    // }
-  }
+  //   FirebaseFirestore.instance
+  //       .collection('posts')
+  //       .add(newPost.toJson())
+  //       .then((value) {
+  //     print('post added');
+  //     Navigator.of(context).pushAndRemoveUntil(
+  //         MaterialPageRoute(
+  //           builder: (context) => BottomNavBar(),
+  //         ),
+  //         (route) => false);
+  //   }).onError((error, stackTrace) {
+  //     print(error.toString());
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +166,7 @@ class _UploadPostState extends State<UploadPost> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            addPostToFirestore(userData["username"]);
+                            addPostToFirestore(userData["username"], _captionController.text, imageUrl!);
                           },
                           child: const Text(
                             'Post',

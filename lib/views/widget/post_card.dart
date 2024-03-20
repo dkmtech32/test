@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/controller/user_provider/user_provider.dart';
 import 'package:flutter_app/core/color.dart';
+import 'package:flutter_app/core/constants.dart';
 import 'package:flutter_app/model/post/post_model.dart';
 import 'package:flutter_app/controller/datetime/date_time_format.dart';
+import 'package:provider/provider.dart';
 
-Widget postCard(Size size, PostModel post) {
+Widget postCard(Size size, PostModel post, BuildContext context) {
+  final userProvider = Provider.of<UserProvider>(context);
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -13,8 +17,26 @@ Widget postCard(Size size, PostModel post) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            leading: const CircleAvatar(
-              backgroundColor: Colors.amber,
+            leading: FutureBuilder<String>(
+              future: userProvider.getProfilePictureUrl(post.username),
+              builder: (context, snapshot) {
+                String? imageUrl = snapshot.data;
+                print(imageUrl);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircleAvatar(
+                    backgroundImage: NetworkImage(profileImage),
+                  );
+                } else if (snapshot.hasError) {
+                  return const CircleAvatar(
+                    backgroundColor: kGreyColor,
+                  );
+                } else {
+                  return CircleAvatar(
+                    // radius: 20,
+                    backgroundImage: NetworkImage(imageUrl!),
+                  );
+                }
+              },
             ),
             title: Text(post.username),
             trailing: IconButton(
@@ -26,11 +48,8 @@ Widget postCard(Size size, PostModel post) {
           Container(
             height: 280,
             decoration: BoxDecoration(
-                image: const DecorationImage(
-                    image: AssetImage(
-                      'assets/images/sachin.jpeg',
-                    ),
-                    fit: BoxFit.cover),
+                image: DecorationImage(
+                    image: NetworkImage(post.imagePath), fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(20)),
           ),
           // const SizedBox(
@@ -109,7 +128,7 @@ Widget postCard(Size size, PostModel post) {
             height: 7,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
             child: Text(
               formatDateTime(post.timestamp),
               style: const TextStyle(fontSize: 16, color: kGreyColor),

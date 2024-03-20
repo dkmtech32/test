@@ -15,29 +15,29 @@ Widget loginTextField(String hintText, bool obscureText,
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [ 
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.2), // Shadow color
-        spreadRadius: 2, // Spread radius
-        blurRadius: 5, // Blur radius
-        offset: const Offset(0, 3), 
-        blurStyle: BlurStyle.inner
-      ),
-    ],
+    //     boxShadow: [ 
+    //   BoxShadow(
+    //     color: Colors.grey.withOpacity(0.2), // Shadow color
+    //     spreadRadius: 2, // Spread radius
+    //     blurRadius: 5, // Blur radius
+    //     offset: const Offset(0, 3), 
+    //     blurStyle: BlurStyle.inner
+    //   ),
+    // ],
       ),
     child: FormBuilderTextField(
       
       name: hintText,
       controller: textController,
       onChanged: (value) {
-        if(hintText == 'otp' && textController.text.isEmpty){
+        if(hintText == 'otp' && textController.text.isNotEmpty){
            context.read<TextfieldValidatorProvider>().updateOTP(value!);
           if(textController.text.isEmpty){
             Provider.of<ShowTextFeildProvider>(context,listen: false).toggleVisbility(false);
           }
-        }else if(hintText == 'email' && textController.text.isEmpty){
+        }else if(hintText == 'email' && textController.text.isNotEmpty){
           context.read<TextfieldValidatorProvider>().updateEmail(value!);
-        }else if(hintText == 'password' && textController.text.isEmpty){
+        }else if(hintText == 'password' && textController.text.isNotEmpty){
           context.read<TextfieldValidatorProvider>().updatePassword(value!);
         }
       },
