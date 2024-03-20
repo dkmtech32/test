@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/model/comment/comment_model.dart';
+import 'package:flutter_app/model/post/post_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FireBasePostService {
@@ -65,6 +66,7 @@ class FireBasePostService {
     }
     return 0;
   }
+
   Future addComment(CommentModel comment, String postId) async {
     try {
       await _firebaseFirestore
@@ -76,7 +78,8 @@ class FireBasePostService {
     } catch (e) {}
   }
 
-  Future<void> fetchComments(String postId, List<CommentModel> postComments) async {
+  Future<void> fetchComments(
+      String postId, List<CommentModel> postComments) async {
     // List<CommentModel> postComments = [];
     try {
       final querySnapshot = await _firebaseFirestore
@@ -92,5 +95,20 @@ class FireBasePostService {
     } catch (e) {
       // return postComments;
     }
+  }
+
+  Future<void> fetchUserPosts(String username, List<PostModel> posts) async {
+    try {
+      final querySnapshot = await _firebaseFirestore
+          .collection('posts')
+          .where('username', isEqualTo: username)
+          .get();
+
+      posts.clear();
+      for (var data in querySnapshot.docs) {
+        Map<String, dynamic> post = data.data();
+        posts.add(PostModel.fromJson(post));
+      }
+    } catch (e) {}
   }
 }

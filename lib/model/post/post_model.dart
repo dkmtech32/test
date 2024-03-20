@@ -19,8 +19,7 @@ class PostModel {
     required this.comments,
   });
 
-
-  toJson(){
+  toJson() {
     return {
       "username": username,
       "caption": caption,
@@ -28,5 +27,16 @@ class PostModel {
       "likes": likes,
       "timestamp": timestamp,
     };
-  } 
+  }
+
+  factory PostModel.fromJson(Map<String, dynamic> json) {
+    return PostModel(
+        postId: json['postId'],
+        username: json["username"],
+        imagePath: json["image path"],
+        caption: json["caption"],
+        timestamp: json["timestamp"].toDate(),
+        likes: List<String>.from(json["likes"]),
+        comments: []);
+  }
 }

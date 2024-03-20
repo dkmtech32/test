@@ -4,10 +4,13 @@ import 'package:flutter_app/core/color.dart';
 class UserTitle extends StatelessWidget {
   final String text;
   final String? time;
+  final String profilePicUrl;
+
   const UserTitle({
     super.key,
     required this.text,
     this.time,
+    required this.profilePicUrl,
   });
 
   @override
@@ -15,8 +18,9 @@ class UserTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
-          leading: const CircleAvatar(
+          leading: CircleAvatar(
             radius: 20,
+            backgroundImage: NetworkImage(profilePicUrl),
           ),
           title: RichText(
               text: TextSpan(children: [

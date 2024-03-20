@@ -170,25 +170,25 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Expanded(
                         child: DefaultTabController(
-                            length: 2,
+                            length: 1,
                             child: Column(
                               children: [
                                 const TabBar(tabs: [
                                   Tab(
                                     text: 'Photos',
                                   ),
-                                  Tab(
-                                    text: 'Videos',
-                                  )
+                                  // Tab(
+                                  //   text: 'Videos',
+                                  // )
                                 ]),
                                 Expanded(
                                     child: TabBarView(children: [
                                   ProfileGridView(posts: posts!,
                                     itemCount: posts.length,
                                   ),
-                                  const ProfileGridView(
-                                    itemCount: 0,posts: [],
-                                  ),
+                                  // const ProfileGridView(
+                                  //   itemCount: 0,posts: [],
+                                  // ),
                                 ]))
                               ],
                             )))
