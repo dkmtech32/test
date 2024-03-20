@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -47,6 +48,34 @@ class FireBasePostService {
     return 0;
   }
 
+  Future<int> postApply(String postId, String emailId, int slotCount) async {
+    try {
+      final docSnapshot =
+          await _firebaseFirestore.collection('posts').doc(postId).get();
+
+      List appliers = docSnapshot.data()!['appliers'];
+      // if (appliers.length < slotCount) {
+      //   appliers.add(emailId);
+      //   await _firebaseFirestore.collection('posts').doc(postId).update({
+      //     'appliers': appliers,
+      //   });
+      //   print("List field updated successfully.");
+      //   return appliers.length;
+      // } else {
+      //   return -1;
+      // }
+      appliers.add(emailId);
+      await _firebaseFirestore.collection('posts').doc(postId).update({
+        'appliers': appliers,
+      });
+      print("List field updated successfully.");
+      return appliers.length;
+    } catch (e) {
+      print("Error updating list field: $e");
+    }
+    return 0;
+  }
+
   Future<int> postUnliked(String postId, String emailId) async {
     try {
       final docSnapshot =
@@ -65,6 +94,24 @@ class FireBasePostService {
       print("Error updating list field: $e");
     }
     return 0;
+  }
+
+  Future postUnApply (String postId, String emailId) async {
+    try {
+      final docSnapshot =
+          await _firebaseFirestore.collection('posts').doc(postId).get();
+
+      List appliers = docSnapshot.data()!['appliers'];
+      appliers.remove(emailId);
+
+      await _firebaseFirestore.collection('posts').doc(postId).update({
+        'appliers': appliers,
+      });
+
+      print("List field updated successfully.");
+    } catch (e) {
+      print("Error updating list field: $e");
+    }
   }
 
   Future addComment(CommentModel comment, String postId) async {

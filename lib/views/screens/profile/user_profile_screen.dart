@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                               (route) => false);
                         });
                       },
-                      icon: const Icon(Icons.menu))
+                      icon: const Icon(Icons.logout))
                 ],
               ),
               body: NestedScrollView(
@@ -98,47 +98,47 @@ class ProfileScreen extends StatelessWidget {
                                         NetworkImage(userData["image path"]),
                                     radius: size.width / 7,
                                   )),
-                              Positioned(
-                                bottom: 10,
-                                child: SizedBox(
-                                  width: size.width,
-                                  child: const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '210M',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          Text(
-                                            'Followers',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '500',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          Text(
-                                            'Following',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              // Positioned(
+                              //   bottom: 10,
+                              //   child: SizedBox(
+                              //     width: size.width,
+                              //     child: const Row(
+                              //       mainAxisAlignment:
+                              //           MainAxisAlignment.spaceEvenly,
+                              //       children: [
+                              //         // Column(
+                              //         //   mainAxisAlignment:
+                              //         //       MainAxisAlignment.center,
+                              //         //   children: [
+                              //         //     Text(
+                              //         //       '210M',
+                              //         //       style: TextStyle(fontSize: 20),
+                              //         //     ),
+                              //         //     Text(
+                              //         //       'Followers',
+                              //         //       style: TextStyle(fontSize: 20),
+                              //         //     ),
+                              //         //   ],
+                              //         // ),
+                              //         SizedBox(),
+                              //         Column(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.center,
+                              //           children: [
+                              //             Text(
+                              //               '500',
+                              //               style: TextStyle(fontSize: 20),
+                              //             ),
+                              //             Text(
+                              //               'Following',
+                              //               style: TextStyle(fontSize: 20),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           )),
                     ),

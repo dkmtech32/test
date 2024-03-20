@@ -12,6 +12,7 @@ class PostModel {
   final String location;
   final DateTime timestamp;
   final List<String> likes;
+  final List<String> appliers;
   final List<CommentModel> comments;
 
   PostModel({
@@ -25,6 +26,7 @@ class PostModel {
     required this.endTime,
     required this.location,
     required this.likes,
+    required this.appliers,
     required this.comments,
   });
 
@@ -38,6 +40,7 @@ class PostModel {
       "endTime": endTime,
       "location": location,
       "likes": likes,
+      "appliers": appliers,
       "timestamp": timestamp,
     };
   }
@@ -54,6 +57,7 @@ class PostModel {
         slotCount: json["slotCount"],
         timestamp: json["timestamp"].toDate(),
         likes: List<String>.from(json["likes"]),
+        appliers: List<String>.from(json["appliers"]),
         comments: []);
   }
 }

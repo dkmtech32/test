@@ -16,6 +16,7 @@ void addPostToFirestore(String username,String caption, String imageUrl, int slo
         imagePath: imageUrl,
         timestamp: DateTime.now(),
         likes: [],
+        appliers: [],
         comments: []);
 
     FirebaseFirestore.instance

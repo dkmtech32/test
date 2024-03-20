@@ -69,6 +69,7 @@ class UserProvider extends ChangeNotifier {
             caption: postDoc["caption"],
             timestamp: postDoc["timestamp"].toDate(),
             likes: List<String>.from(postDoc["likes"]),
+            appliers: List<String>.from(postDoc["appliers"]),
             comments: []);
         posts.add(post);
       }
@@ -97,6 +98,7 @@ class UserProvider extends ChangeNotifier {
             slotCount: postDoc["slotCount"],
             timestamp: postDoc["timestamp"].toDate(),
             likes: List<String>.from(postDoc["likes"]),
+            appliers: List<String>.from(postDoc["appliers"]),
             comments: []);
         posts.add(post);
       }

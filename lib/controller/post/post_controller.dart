@@ -9,11 +9,15 @@ class PostController extends GetxController {
   List<PostModel> userPosts = <PostModel>[].obs;
 
   var isFavourite = false.obs;
+  var isApplied = false.obs;
   var likesCount = 0.obs;
+  var appliersCount = 0.obs;
 
   void fetchIsLiked(PostModel post, String emailId) {
     isFavourite.value = post.likes.contains(emailId);
     likesCount.value = post.likes.length;
+    isApplied.value = post.appliers.contains(emailId);
+    appliersCount.value = post.appliers.length;
   }
 
   void likeButtonClicked(
@@ -33,7 +37,22 @@ class PostController extends GetxController {
       print('controller called');
     }
   }
-
+void applyButtonClicked(
+      String postId, String currentUserEmailId, PostModel post) async {
+    
+    if (isApplied.value) {
+      isApplied.value = !isApplied.value;
+      await _fireBasePostService.postApply(postId, currentUserEmailId, post.slotCount);
+      // updateLikesCount(likesCount.value);
+      print('controller called');
+    } else {
+      isApplied.value = !isApplied.value;
+      // likesCount.value =
+      await _fireBasePostService.postUnApply(postId, currentUserEmailId);
+      // updateLikesCount(likesCount.value);
+      print('controller called');
+    }
+  }
   void commentButtonClicked(String postId) {
     // List<CommentModel> comments =
     _fireBasePostService.fetchComments(postId, comments);
