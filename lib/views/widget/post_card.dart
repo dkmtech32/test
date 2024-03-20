@@ -7,6 +7,7 @@ import 'package:flutter_app/core/constants.dart';
 import 'package:flutter_app/model/comment/comment_model.dart';
 import 'package:flutter_app/model/post/post_model.dart';
 import 'package:flutter_app/controller/datetime/date_time_format.dart';
+import 'package:flutter_app/views/screens/viewProfile/other_profile.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            // onTap: () => Get.to(()=> OtherUserProfile(profile: )),
+            // onTap: () async => Get.to(() => OtherUserProfile(profile: await userProvider.fetchUserDetailsFromFireStoreByUsername(post.username))),
             child: ListTile(
               leading: FutureBuilder<String>(
                 future: userProvider.getProfilePictureUrl(post.username),
@@ -152,6 +153,7 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
   );
 }
 
+
 Future<dynamic> commentBottomSheet(
     Size size,
     BuildContext context,
@@ -186,24 +188,21 @@ Future<dynamic> commentBottomSheet(
               color: Colors.white,
             ),
             Expanded(
-                child: Obx(() => ListView.builder(
-                    itemCount: postController.comments.length,
-                    itemBuilder: (context, index) => ListTile(
-                          leading: const CircleAvatar(),
-                          title: RichText(
-                            text: TextSpan(children: [
-                              TextSpan(
-                                  text:
-                                      postController.comments[index].username),
-                              const TextSpan(text: '  '),
-                              TextSpan(
-                                  text: formatDateTime(
-                                      postController.comments[index].timestamp),
-                                  style: const TextStyle(color: kGreyColor))
-                            ]),
-                          ),
-                          subtitle: Text(postController.comments[index].text),
-                        )))),
+                child:Obx(() =>  ListView.builder(
+                      itemCount: postController.comments.length,
+                      itemBuilder: (context, index) => ListTile(
+                            leading: const CircleAvatar(),
+                            title: RichText(
+                              text: TextSpan(children: [
+                                TextSpan(text: postController.comments[index].username),
+                                const TextSpan(text: '  '),
+                                 TextSpan(
+                                    text: formatDateTime(postController.comments[index].timestamp),
+                                    style: const TextStyle(color: kGreyColor))
+                              ]),
+                            ),
+                            subtitle: Text(postController.comments[index].text),
+                          )))),
             SizedBox(
               height: size.width / 20,
             ),

@@ -87,6 +87,7 @@ class FireBasePostService {
           .doc(postId)
           .collection('comments')
           .get();
+      postComments.clear();
       for (var comments in querySnapshot.docs) {
         Map<String, dynamic> comment = comments.data();
         postComments.add(CommentModel.fromJson(comment));
