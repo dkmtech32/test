@@ -23,6 +23,10 @@ class _UploadPostState extends State<UploadPost> {
   String? imagePath;
   String? imageUrl;
   final TextEditingController _captionController = TextEditingController();
+  String dropdownLocationValue = 'S1 Football Court';
+  int dropdownNoValue = 1;
+  TimeOfDay startTime = TimeOfDay.now();
+  TimeOfDay endTime = TimeOfDay.now();
 
   Future<void> selectImage(String clicked, String username) async {
     final XFile? imagePicked;
@@ -36,7 +40,8 @@ class _UploadPostState extends State<UploadPost> {
         imagePath = imagePicked!.path;
       });
 
-      imageUrl = await FireBasePostService().addPostImage(imagePicked, username);
+      imageUrl =
+          await FireBasePostService().addPostImage(imagePicked, username);
     }
   }
 
@@ -91,8 +96,8 @@ class _UploadPostState extends State<UploadPost> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: size.width * .7,
-                        height: size.width * .8,
+                        width: size.width * .8,
+                        height: size.width * .5,
                         decoration: imagePath != null
                             ? BoxDecoration(
                                 image: DecorationImage(
@@ -164,10 +169,175 @@ class _UploadPostState extends State<UploadPost> {
                       SizedBox(
                         height: size.width / 16,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Start Time ${startTime.hour}:${startTime.minute}',
+                                style: TextStyle(fontSize: size.width / 20),
+                              ),
+                              ElevatedButton(
+                                 child: const Text('Select Start Time'),
+                                 onPressed: () async {
+                                   TimeOfDay? time = await showTimePicker(
+                                     context: context,
+                                     initialTime: startTime,
+                                   );
+                                   if (time != null)
+                                     setState(() {
+                                       startTime = time;
+                                     });
+                                 },
+                                 )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'End Time ${endTime.hour}:${endTime.minute}',
+                                style: TextStyle(fontSize: size.width / 20),
+                              ),
+                              ElevatedButton(
+                                 child: const Text('Select End Time'),
+                                 onPressed: () async {
+                                   TimeOfDay? time = await showTimePicker(
+                                     context: context,
+                                     initialTime: endTime,
+                                   );
+                                   if (time != null)
+                                     setState(() {
+                                       endTime = time;
+                                     });
+                                 },
+                                 )
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.width / 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: size.height * .25,
+                            height: size.width * .15,
+                            child: DropdownButton(
+                              hint: const Text('Select Location'),
+                              value: dropdownLocationValue,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownLocationValue = newValue!;
+                                });
+                              },
+                              items: const [
+                                DropdownMenuItem<String>(
+                                  value: 'S1 Football Court',
+                                  child: Text('S1 Football Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S1 Basketball Court',
+                                  child: Text('S1 Basketball Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S1 Badminton Court',
+                                  child: Text('S1 Badminton Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S1 Volleyball Court',
+                                  child: Text('S1 Volleyball Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S1 Tennis Court',
+                                  child: Text('S1 Tennis Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S2 Basketball Court',
+                                  child: Text('S2 Basketball Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S2 Badminton Court',
+                                  child: Text('S2 Badminton Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S2 Volleyball Court',
+                                  child: Text('S2 Volleyball Court'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'S2 Tennis Court',
+                                  child: Text('S2 Tennis Court'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: size.width * .3,
+                            height: size.width * .15,
+                            child: DropdownButton(
+                              isExpanded: true,
+                              hint: const Text('Number of Players'),
+                              value: dropdownNoValue,
+                              onChanged: (Object? newValue) {
+                                setState(() {
+                                  dropdownNoValue = newValue as int;
+                                });
+                              },
+                              items: const [
+                                DropdownMenuItem<int>(
+                                  value: 1,
+                                  child: Text('1'),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 2,
+                                  child: Text('2'),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 3,
+                                  child: Text('3'),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 4,
+                                  child: Text('4'),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 5,
+                                  child: Text('5'),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 6,
+                                  child: Text('6'),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 7,
+                                  child: Text('7'),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 8,
+                                  child: Text('8'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.width / 16,
+                      ),
                       ElevatedButton(
                           onPressed: () {
-                            addPostToFirestore(userData["username"],
-                                _captionController.text, imageUrl!);
+                            addPostToFirestore(
+                                userData["username"],
+                                _captionController.text,
+                                imageUrl!,
+                                dropdownNoValue,
+                                userData["name"],
+                                userData["email"],
+                                userData["followers"]);
                           },
                           child: const Text(
                             'Post',
