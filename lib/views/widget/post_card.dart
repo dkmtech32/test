@@ -24,33 +24,36 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ListTile(
-            leading: FutureBuilder<String>(
-              future: userProvider.getProfilePictureUrl(post.username),
-              builder: (context, snapshot) {
-                String? imageUrl = snapshot.data;
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircleAvatar(
-                    backgroundImage: NetworkImage(profileImage),
-                  );
-                } else if (snapshot.hasError) {
-                  return const CircleAvatar(
-                    backgroundColor: kGreyColor,
-                  );
-                } else {
-                  return CircleAvatar(
-                    // radius: 20,
-                    backgroundImage: NetworkImage(imageUrl!),
-                  );
-                }
-              },
+          GestureDetector(
+            // onTap: () => Get.to(()=> OtherUserProfile(profile: )),
+            child: ListTile(
+              leading: FutureBuilder<String>(
+                future: userProvider.getProfilePictureUrl(post.username),
+                builder: (context, snapshot) {
+                  String? imageUrl = snapshot.data;
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircleAvatar(
+                      backgroundImage: NetworkImage(profileImage),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const CircleAvatar(
+                      backgroundColor: kGreyColor,
+                    );
+                  } else {
+                    return CircleAvatar(
+                      // radius: 20,
+                      backgroundImage: NetworkImage(imageUrl!),
+                    );
+                  }
+                },
+              ),
+              title: Text(post.username),
+              trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_vert,
+                  )),
             ),
-            title: Text(post.username),
-            trailing: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.more_vert,
-                )),
           ),
 
           Container(
