@@ -54,16 +54,7 @@ class FireBasePostService {
           await _firebaseFirestore.collection('posts').doc(postId).get();
 
       List appliers = docSnapshot.data()!['appliers'];
-      // if (appliers.length < slotCount) {
-      //   appliers.add(emailId);
-      //   await _firebaseFirestore.collection('posts').doc(postId).update({
-      //     'appliers': appliers,
-      //   });
-      //   print("List field updated successfully.");
-      //   return appliers.length;
-      // } else {
-      //   return -1;
-      // }
+
       appliers.add(emailId);
       await _firebaseFirestore.collection('posts').doc(postId).update({
         'appliers': appliers,
@@ -96,7 +87,7 @@ class FireBasePostService {
     return 0;
   }
 
-  Future postUnApply (String postId, String emailId) async {
+  Future postUnApply(String postId, String emailId) async {
     try {
       final docSnapshot =
           await _firebaseFirestore.collection('posts').doc(postId).get();
