@@ -6,6 +6,7 @@ import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
 import 'package:flutter_app/model/post/post_model.dart';
 import 'package:flutter_app/controller/datetime/date_time_format.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 Widget postCard(Size size, PostModel post, BuildContext context) {
@@ -62,16 +63,25 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
           // ),
           Row(
             children: [
-              IconButton(
-                  onPressed: () {
-                    print(FirebaseAuth.instance.currentUser!.email!);
-                    postController.likeButtonClicked(post.postId!,
-                        FirebaseAuth.instance.currentUser!.email!);
-                  },
-                  icon: const Icon(
-                    Icons.favorite_outline,
-                    size: 28,
-                  )),
+              Obx(
+                () => IconButton(
+                    onPressed: () {
+                      print(FirebaseAuth.instance.currentUser!.email!);
+
+                      postController.likeButtonClicked(post.postId!,
+                          FirebaseAuth.instance.currentUser!.email!, post);
+                    },
+                    icon: postController.isFavourite.value
+                        ? const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                            size: 28,
+                          )
+                        : const Icon(
+                            Icons.favorite_outline,
+                            size: 28,
+                          )),
+              ),
               IconButton(
                   onPressed: () {
                     commentBottomSheet(
@@ -105,12 +115,13 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(
-              '${post.likes.length} likes',
-              style: const TextStyle(fontSize: 18),
-            ),
-          ),
+              padding: const EdgeInsets.only(left: 20),
+              child: Obx(
+                () => Text(
+                  '${postController.likesCount.value} likes',
+                  style: const TextStyle(fontSize: 18),
+                ),
+              )),
           const SizedBox(
             height: 7,
           ),
@@ -170,17 +181,17 @@ Future<dynamic> commentBottomSheet(Size size, BuildContext context,
                 child: ListView.builder(
                     itemCount: 50,
                     itemBuilder: (context, index) => ListTile(
-                          leading: CircleAvatar(),
+                          leading: const CircleAvatar(),
                           title: RichText(
                             text: TextSpan(children: [
                               TextSpan(text: postId),
-                              TextSpan(text: '  '),
-                              TextSpan(
+                              const TextSpan(text: '  '),
+                              const TextSpan(
                                   text: '5d',
                                   style: TextStyle(color: kGreyColor))
                             ]),
                           ),
-                          subtitle: Text('commment'),
+                          subtitle: const Text('commment'),
                         ))),
             SizedBox(
               height: size.width / 20,

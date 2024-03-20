@@ -25,7 +25,7 @@ class FireBasePostService {
     }
   }
 
-  Future<void> postLiked(String postId, String emailId) async {
+  Future<int> postLiked(String postId, String emailId) async {
     try {
       final docSnapshot =
           await _firebaseFirestore.collection('posts').doc(postId).get();
@@ -38,8 +38,30 @@ class FireBasePostService {
       });
 
       print("List field updated successfully.");
+      return likes.length;
     } catch (e) {
       print("Error updating list field: $e");
     }
+    return 0;
+  }
+
+  Future<int> postUnliked(String postId, String emailId) async {
+    try {
+      final docSnapshot =
+          await _firebaseFirestore.collection('posts').doc(postId).get();
+
+      List likes = docSnapshot.data()!['likes'];
+      likes.remove(emailId);
+
+      await _firebaseFirestore.collection('posts').doc(postId).update({
+        'likes': likes,
+      });
+
+      print("List field updated successfully.");
+      return likes.length;
+    } catch (e) {
+      print("Error updating list field: $e");
+    }
+    return 0;
   }
 }
