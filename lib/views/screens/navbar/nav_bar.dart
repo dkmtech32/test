@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
+import 'package:flutter_app/model/user/user_model.dart';
+import 'package:flutter_app/services/users/user_profile.dart';
+
+UserModel? userData;
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -11,6 +16,12 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    getUserDataByEmail(FirebaseAuth.instance.currentUser!.email!);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

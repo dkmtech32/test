@@ -4,6 +4,7 @@ import 'package:flutter_app/controller/post/post_controller.dart';
 import 'package:flutter_app/controller/user/user_provider.dart';
 import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
+import 'package:flutter_app/model/comment/comment_model.dart';
 import 'package:flutter_app/model/post/post_model.dart';
 import 'package:flutter_app/controller/datetime/date_time_format.dart';
 import 'package:get/get.dart';
@@ -67,7 +68,7 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
                 () => IconButton(
                     onPressed: () {
                       print(FirebaseAuth.instance.currentUser!.email!);
-
+                      print(post.postId);
                       postController.likeButtonClicked(post.postId!,
                           FirebaseAuth.instance.currentUser!.email!, post);
                     },
@@ -84,8 +85,8 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
               ),
               IconButton(
                   onPressed: () {
-                    commentBottomSheet(
-                        size, context, commentController, post.postId!);
+                    commentBottomSheet(size, context, commentController,
+                        post.postId!, postController);
                   },
                   icon: const Icon(
                     Icons.comment_bank_outlined,
@@ -148,11 +149,15 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
   );
 }
 
-Future<dynamic> commentBottomSheet(Size size, BuildContext context,
-    TextEditingController commentController, String postId) {
+Future<dynamic> commentBottomSheet(
+    Size size,
+    BuildContext context,
+    TextEditingController commentController,
+    String postId,
+    PostController postController) {
   return showModalBottomSheet(
     constraints:
-        BoxConstraints.expand(height: size.height * .7, width: size.width),
+        BoxConstraints.expand(height: size.height * .6, width: size.width),
     isScrollControlled: true,
     context: context,
     shape: const RoundedRectangleBorder(
@@ -178,21 +183,33 @@ Future<dynamic> commentBottomSheet(Size size, BuildContext context,
               color: Colors.white,
             ),
             Expanded(
-                child: ListView.builder(
-                    itemCount: 50,
-                    itemBuilder: (context, index) => ListTile(
-                          leading: const CircleAvatar(),
-                          title: RichText(
-                            text: TextSpan(children: [
-                              TextSpan(text: postId),
-                              const TextSpan(text: '  '),
-                              const TextSpan(
-                                  text: '5d',
-                                  style: TextStyle(color: kGreyColor))
-                            ]),
-                          ),
-                          subtitle: const Text('commment'),
-                        ))),
+                child: FutureBuilder(
+              future: postController.commentButtonClicked(postId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasData) {
+                  List<CommentModel> comments = snapshot.data!;
+                  return ListView.builder(
+                      itemCount: comments.length,
+                      itemBuilder: (context, index) => ListTile(
+                            leading: const CircleAvatar(),
+                            title: RichText(
+                              text: TextSpan(children: [
+                                TextSpan(text: comments[index].username),
+                                const TextSpan(text: '  '),
+                                const TextSpan(
+                                    text: '5d',
+                                    style: TextStyle(color: kGreyColor))
+                              ]),
+                            ),
+                            subtitle: Text(comments[index].text),
+                          ));
+                } else {
+                  return Text('data');
+                }
+              },
+            )),
             SizedBox(
               height: size.width / 20,
             ),
@@ -201,7 +218,18 @@ Future<dynamic> commentBottomSheet(Size size, BuildContext context,
               child: TextField(
                 controller: commentController,
                 decoration: InputDecoration(
-                    suffixIcon: const Icon(Icons.send),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          CommentModel comment = CommentModel(
+                              postId: postId,
+                              email: FirebaseAuth.instance.currentUser!.email!,
+                              username: 'athul',
+                              text: commentController.text,
+                              timestamp: DateTime.now());
+                          commentController.clear();
+                          postController.postComment(comment, postId);
+                        },
+                        icon: Icon(Icons.send)),
                     hintText: 'Add a comment...',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
