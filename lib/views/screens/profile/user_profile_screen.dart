@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/controller/user_provider/user_provider.dart';
+import 'package:flutter_app/model/post/post_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter_app/views/widget/profile_grid_view.dart';
 import 'package:flutter_app/views/widget/user_detail.dart';
 import 'package:flutter_app/views/screens/auth/login_screen.dart';
-import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 import 'package:flutter_app/services/users/user_profile.dart';
 
 import 'package:flutter_app/core/constants.dart';
@@ -16,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     // final user = context.read<FirebaseAuthMethods>().currentUser;
     Size size = MediaQuery.sizeOf(context);
     return FutureBuilder<DocumentSnapshot?>(
@@ -38,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
+                                builder: (context) => const LoginScreen(),
                               ),
                               (route) => false);
                         });
@@ -48,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               body: NestedScrollView(
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
-                  return [
+                  return  [
                     SliverAppBar(
                       backgroundColor:
                           Theme.of(context).scaffoldBackgroundColor,
@@ -147,14 +149,31 @@ class ProfileScreen extends StatelessWidget {
                         buttonText: 'Edit profile'),
                   ];
                 },
-                body: const Column(
+                body:  FutureBuilder<List<PostModel>>(
+          future: userProvider.fetchCurrentUserPosts(userData["username"]),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            } else {
+              List<PostModel>? posts = snapshot.data;
+
+              return 
+                
+                
+                  Column(
                   children: [
                     Expanded(
                         child: DefaultTabController(
                             length: 2,
                             child: Column(
                               children: [
-                                TabBar(tabs: [
+                                const TabBar(tabs: [
                                   Tab(
                                     text: 'Photos',
                                   ),
@@ -164,17 +183,17 @@ class ProfileScreen extends StatelessWidget {
                                 ]),
                                 Expanded(
                                     child: TabBarView(children: [
-                                  ProfileGridView(
-                                    itemCount: 30,
+                                  ProfileGridView(posts: posts!,
+                                    itemCount: posts.length,
                                   ),
-                                  ProfileGridView(
-                                    itemCount: 30,
+                                  const ProfileGridView(
+                                    itemCount: 0,posts: [],
                                   ),
                                 ]))
                               ],
                             )))
                   ],
-                ),
+                );}})
               ),
             );
           } else {

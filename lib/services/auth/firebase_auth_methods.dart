@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/core/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -97,7 +98,7 @@ class FirebaseAuthMethods {
       });
     } on FirebaseAuthException catch (e) {
       Navigator.of(context, rootNavigator: true).pop();
-      showSnackbar(context, e.message!);
+      showSnackbar(context, e.message!,kCyanColor);
     }
   }
 
@@ -181,7 +182,7 @@ class FirebaseAuthMethods {
       );
     } on FirebaseAuthException catch (e) {
       Navigator.of(context, rootNavigator: true).pop();
-      showSnackbar(context, e.message!);
+      showSnackbar(context, e.message!,kCyanColor);
     }
   }
 
@@ -229,10 +230,10 @@ void sendOTP(String email, BuildContext context) async {
   // var res = await emailAuth.sendOtp(recipientMail: email);
   if (await emailAuth.sendOTP() == true) {
     // ignore: use_build_context_synchronously
-    showSnackbar(context, 'OTP send succesfully');
+    showSnackbar(context, 'OTP send succesfully',kCyanColor);
   } else {
     // ignore: use_build_context_synchronously
-    showSnackbar(context, 'Please try again');
+    showSnackbar(context, 'Please try again',kCyanColor);
   }
 }
 
@@ -240,10 +241,10 @@ bool verifyOTP(String email, String userOtp, BuildContext context) {
 // var res = emailAuth.validateOtp(recipientMail: email, userOtp: userOtp);
 
   if (emailAuth.verifyOTP(otp: userOtp) == true) {
-    showSnackbar(context, 'Otp verified');
+    showSnackbar(context, 'Otp verified',kCyanColor);
     return true;
   } else {
-    showSnackbar(context, 'Invalid OTP');
+    showSnackbar(context, 'Invalid OTP',kCyanColor);
     return false;
   }
 }

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/color.dart';
 
-void showSnackbar(BuildContext context, String text) {
+void showSnackbar(BuildContext context, String text, Color color) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
         // shape: BorderRadius.circular(10),
-        backgroundColor: kCyanColor,
+        backgroundColor: color,
         behavior: SnackBarBehavior.floating,
         content: Text(
           text,
-          style: TextStyle(fontSize: 15),
+          style: const TextStyle(fontSize: 15),
         )),
   );
 }

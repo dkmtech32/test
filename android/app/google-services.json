@@ -14,6 +14,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "327956457228-fbiq57h6bhu4q96n99v49g0olgmn14mb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobilebookingcourt",
+            "certificate_hash": "75f162ed2770ec5d66f4fa263474b5a01e28ed56"
+          }
+        },
+        {
+          "client_id": "327956457228-luj5ups7rfl5h4tql6c9alom3544etk6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobilebookingcourt",
+            "certificate_hash": "109755a8e8d5ee8dd89ec7d633bfb17c8e442d34"
+          }
+        },
+        {
+          "client_id": "327956457228-trljdavh6r5mrmod4o7pk81qk9qi8a45.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobilebookingcourt",
+            "certificate_hash": "47d6056f2fbef6af39102a8287e0762f0d334a62"
+          }
+        },
+        {
           "client_id": "327956457228-g5vl67hm5kd83vqb9sal24k2o6ilhoqi.apps.googleusercontent.com",
           "client_type": 3
         }

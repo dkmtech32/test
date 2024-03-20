@@ -2,19 +2,23 @@ import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:flutter_app/controller/text_field_validator_controller.dart';
 import 'package:flutter_app/core/color.dart';
 import 'package:flutter_app/services/auth/firebase_auth_methods.dart';
 import 'package:flutter_app/views/screens/auth/signup_screen.dart';
 import 'package:flutter_app/views/widget/login_textfield.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:http/http.dart';
-import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_app/views/screens/auth/reset_password_screen.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -81,7 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const ResetPasswordScreen(),
+                                ));
+                              },
                               child: const Text(
                                 'Forgot password?',
                                 style: TextStyle(color: kGreyColor),
@@ -189,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => SignupScreen(),
+                                  builder: (context) => const SignupScreen(),
                                 ));
                               },
                               child: const Text(

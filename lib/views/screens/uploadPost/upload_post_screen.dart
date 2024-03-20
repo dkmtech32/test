@@ -166,7 +166,8 @@ class _UploadPostState extends State<UploadPost> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            addPostToFirestore(userData["username"], _captionController.text, imageUrl!);
+                            addPostToFirestore(userData["username"],
+                                _captionController.text, imageUrl!);
                           },
                           child: const Text(
                             'Post',
@@ -179,7 +180,7 @@ class _UploadPostState extends State<UploadPost> {
             ),
           );
         } else {
-          return Text('data');
+          return const Text('data');
         }
       },
     );

@@ -20,7 +20,8 @@ void main() async {
               apiKey: 'AIzaSyCE37Xv7aORInMRDPwDiiIgkT7bH5BTfeQ',
               appId: '1:327956457228:android:0694fbf7ee68644a550b29',
               messagingSenderId: '327956457228',
-              projectId: 'sportscape-e529c'))
+              projectId: 'sportscape-e529c',
+              storageBucket: 'gs://sportscape-e529c.appspot.com'))
       : await Firebase.initializeApp();
   runApp(const MyApp());
 }

@@ -23,9 +23,8 @@ class UserProvider extends ChangeNotifier {
 
         notifyListeners();
       }
-    } catch (e) {
-      print(e);
-    }
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   Future<List<PostModel>> fetchPostsFromFirebase() async {
@@ -44,9 +43,32 @@ class UserProvider extends ChangeNotifier {
             comments: []);
         posts.add(post);
       }
-    } catch (e) {
-      print(e);
-    }
+      // ignore: empty_catches
+    } catch (e) {}
+    return posts;
+  }
+
+  Future<List<PostModel>> fetchCurrentUserPosts(String username) async {
+    List<PostModel> posts = [];
+
+    try {
+      QuerySnapshot postSnapshot = await firestore
+          .collection('posts')
+          .where('username', isEqualTo: username)
+          .get();
+      for (var postDoc in postSnapshot.docs) {
+        PostModel post = PostModel(
+            postId: postDoc.id,
+            username: postDoc["username"],
+            imagePath: postDoc["image path"],
+            caption: postDoc["caption"],
+            timestamp: postDoc["timestamp"].toDate(),
+            likes: List<String>.from(postDoc["likes"]),
+            comments: []);
+        posts.add(post);
+      }
+      // ignore: empty_catches
+    } catch (e) {}
     return posts;
   }
 
@@ -58,11 +80,9 @@ class UserProvider extends ChangeNotifier {
         .get();
     if (userSnapShot.docs.isNotEmpty) {
       imageUrl = userSnapShot.docs[0]["image path"];
-      print(imageUrl);
     } else {
       imageUrl = '';
     }
-    print('object $imageUrl');
     return imageUrl;
   }
 }
