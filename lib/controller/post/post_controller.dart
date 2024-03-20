@@ -39,20 +39,38 @@ class PostController extends GetxController {
   }
 void applyButtonClicked(
       String postId, String currentUserEmailId, PostModel post) async {
-    
+    // isApplied.value = post.likes.contains(currentUserEmailId);
     if (isApplied.value) {
       isApplied.value = !isApplied.value;
-      await _fireBasePostService.postApply(postId, currentUserEmailId, post.slotCount);
+      appliersCount.value =
+          await _fireBasePostService.postApply(postId, currentUserEmailId);
       // updateLikesCount(likesCount.value);
       print('controller called');
     } else {
       isApplied.value = !isApplied.value;
-      // likesCount.value =
-      await _fireBasePostService.postUnApply(postId, currentUserEmailId);
+      appliersCount.value =
+          await _fireBasePostService.postUnApply(postId, currentUserEmailId);
       // updateLikesCount(likesCount.value);
       print('controller called');
     }
   }
+  // void applyButtonClicked(
+  //     String postId, String currentUserEmailId, PostModel post) async {
+  //   if (isApplied.value) {
+  //     isApplied.value = !isApplied.value;
+  //     appliersCount.value = await _fireBasePostService.postApply(
+  //         postId, currentUserEmailId);
+  //     // updateLikesCount(likesCount.value);
+  //     print('controller called');
+  //   } else {
+  //     isApplied.value = !isApplied.value;
+  //     appliersCount.value =
+  //         await _fireBasePostService.postUnApply(postId, currentUserEmailId);
+  //     // updateLikesCount(likesCount.value);
+  //     print('controller called');
+  //   }
+  // }
+
   void commentButtonClicked(String postId) {
     // List<CommentModel> comments =
     _fireBasePostService.fetchComments(postId, comments);
@@ -63,8 +81,8 @@ void applyButtonClicked(
     await _fireBasePostService.addComment(comment, postId);
     commentButtonClicked(postId);
   }
-   void otherUserPosts(String username)async{
 
-   await _fireBasePostService.fetchUserPosts(username, userPosts);
+  void otherUserPosts(String username) async {
+    await _fireBasePostService.fetchUserPosts(username, userPosts);
   }
 }

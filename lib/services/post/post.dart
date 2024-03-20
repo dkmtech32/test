@@ -48,7 +48,7 @@ class FireBasePostService {
     return 0;
   }
 
-  Future<int> postApply(String postId, String emailId, int slotCount) async {
+  Future<int> postApply(String postId, String emailId) async {
     try {
       final docSnapshot =
           await _firebaseFirestore.collection('posts').doc(postId).get();

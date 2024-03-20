@@ -98,8 +98,13 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
               Column(
                 children: [
                   const SizedBox(height: 10.0),
-                  Text(post.caption != null ? post.caption.toString() : "",
-                      style: const TextStyle(fontSize: 16)),
+                  Container(
+                    width: 170, // Set the desired width here
+                    child: Text(
+                      post.caption != null ? post.caption.toString() : "",
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
                   const SizedBox(height: 10.0),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
@@ -257,11 +262,12 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
                       () => IconButton(
                           onPressed: () {
                             AwesomeNotifications().createNotification(
-                          content: NotificationContent(
-                              id: 10,
-                              channelKey: 'basic_channel',
-                              title: 'You applied to a session',
-                              body: 'You applied to ${post.username}\'s post'));
+                                content: NotificationContent(
+                                    id: 10,
+                                    channelKey: 'basic_channel',
+                                    title: 'You applied to a session',
+                                    body:
+                                        'You applied to ${post.username}\'s post'));
                             postController.applyButtonClicked(
                                 post.postId!,
                                 FirebaseAuth.instance.currentUser!.email!,
@@ -283,6 +289,14 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
               const SizedBox(
                 width: 10,
               ),
+              Obx(
+                () => Text(
+                  "${postController.appliersCount.value}" +
+                      '/' +
+                      post.slotCount.toString(),
+                  style: const TextStyle(fontSize: 18),
+                ),
+              )
             ],
           ),
           const SizedBox(
