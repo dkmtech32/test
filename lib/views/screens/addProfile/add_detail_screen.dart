@@ -90,7 +90,7 @@ class _AddDetailsState extends State<AddDetails> {
                         coverImage: coverImage,
                         fullName: fullNameController.text.trim(),
                         userName: userNameController.text.trim(),
-                        likedPosts: [],
+                        // likedPosts: [],
                         bio: bioController.text.isNotEmpty
                             ? bioController.text.trim()
                             : '');

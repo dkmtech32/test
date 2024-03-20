@@ -14,6 +14,7 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
   final userProvider = Provider.of<UserProvider>(context);
   final TextEditingController commentController = TextEditingController();
   final PostController postController = PostController();
+  postController.fetchIsLiked(post, FirebaseAuth.instance.currentUser!.email!);
 
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -67,8 +68,6 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
               Obx(
                 () => IconButton(
                     onPressed: () {
-                      print(FirebaseAuth.instance.currentUser!.email!);
-                      print(post.postId);
                       postController.likeButtonClicked(post.postId!,
                           FirebaseAuth.instance.currentUser!.email!, post);
                     },
@@ -85,6 +84,7 @@ Widget postCard(Size size, PostModel post, BuildContext context) {
               ),
               IconButton(
                   onPressed: () {
+                    postController.commentButtonClicked(post.postId!);
                     commentBottomSheet(size, context, commentController,
                         post.postId!, postController);
                   },
@@ -183,33 +183,24 @@ Future<dynamic> commentBottomSheet(
               color: Colors.white,
             ),
             Expanded(
-                child: FutureBuilder(
-              future: postController.commentButtonClicked(postId),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasData) {
-                  List<CommentModel> comments = snapshot.data!;
-                  return ListView.builder(
-                      itemCount: comments.length,
-                      itemBuilder: (context, index) => ListTile(
-                            leading: const CircleAvatar(),
-                            title: RichText(
-                              text: TextSpan(children: [
-                                TextSpan(text: comments[index].username),
-                                const TextSpan(text: '  '),
-                                const TextSpan(
-                                    text: '5d',
-                                    style: TextStyle(color: kGreyColor))
-                              ]),
-                            ),
-                            subtitle: Text(comments[index].text),
-                          ));
-                } else {
-                  return Text('data');
-                }
-              },
-            )),
+                child: Obx(() => ListView.builder(
+                    itemCount: postController.comments.length,
+                    itemBuilder: (context, index) => ListTile(
+                          leading: const CircleAvatar(),
+                          title: RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                  text:
+                                      postController.comments[index].username),
+                              const TextSpan(text: '  '),
+                              TextSpan(
+                                  text: formatDateTime(
+                                      postController.comments[index].timestamp),
+                                  style: const TextStyle(color: kGreyColor))
+                            ]),
+                          ),
+                          subtitle: Text(postController.comments[index].text),
+                        )))),
             SizedBox(
               height: size.width / 20,
             ),
@@ -229,7 +220,7 @@ Future<dynamic> commentBottomSheet(
                           commentController.clear();
                           postController.postComment(comment, postId);
                         },
-                        icon: Icon(Icons.send)),
+                        icon: const Icon(Icons.send)),
                     hintText: 'Add a comment...',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
