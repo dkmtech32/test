@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/color.dart';
+import 'package:flutter_app/model/post/post_model.dart';
+import 'package:flutter_app/controller/datetime/date_time_format.dart';
 
-Widget postCard(Size size) {
+Widget postCard(Size size, PostModel post) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -14,7 +16,7 @@ Widget postCard(Size size) {
             leading: const CircleAvatar(
               backgroundColor: Colors.amber,
             ),
-            title: const Text('username'),
+            title: Text(post.username),
             trailing: IconButton(
                 onPressed: () {},
                 icon: const Icon(
@@ -86,31 +88,31 @@ Widget postCard(Size size) {
           const SizedBox(
             height: 10,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
             child: Text(
-              '200 likes',
-              style: TextStyle(fontSize: 18),
+              '${post.likes.length} likes',
+              style: const TextStyle(fontSize: 18),
             ),
           ),
           const SizedBox(
             height: 7,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
             child: Text(
-              'Caption of the post',
-              style: TextStyle(fontSize: 16),
+              post.caption != null ? post.caption.toString() : "",
+              style: const TextStyle(fontSize: 16),
             ),
           ),
           const SizedBox(
             height: 7,
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 20),
             child: Text(
-              '15 minutes ago',
-              style: TextStyle(fontSize: 16, color: kGreyColor),
+              formatDateTime(post.timestamp),
+              style: const TextStyle(fontSize: 16, color: kGreyColor),
             ),
           )
         ],

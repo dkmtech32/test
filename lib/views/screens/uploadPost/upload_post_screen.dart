@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/post/post.dart';
+import 'package:flutter_app/services/users/user_profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,8 +11,10 @@ import 'package:flutter_app/model/post/post_model.dart';
 import 'package:flutter_app/controller/user_provider/user_provider.dart';
 import 'package:flutter_app/model/user/user_model.dart';
 
+
 class UploadPost extends StatefulWidget {
   const UploadPost({super.key});
+
   @override
   State<UploadPost> createState() => _UploadPostState();
 }
@@ -20,7 +24,7 @@ class _UploadPostState extends State<UploadPost> {
   String? imageUrl;
   final TextEditingController _captionController = TextEditingController();
 
-  Future<void> selectImage(String clicked) async {
+  Future<void> selectImage(String clicked, String username) async {
     final XFile? imagePicked;
     if (clicked == 'gallery') {
       imagePicked = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -32,11 +36,11 @@ class _UploadPostState extends State<UploadPost> {
         imagePath = imagePicked!.path;
       });
 
-      // imageUrl =await addProfileImge(imagePicked);
+      imageUrl = await addPostImage(imagePicked, username);
     }
   }
 
-  void addPostToFirestore() async {
+  void addPostToFirestore(String username) async {
     // print(logged.fullName);
 
     // final userProvider = Provider.of<UserProvider>(context, listen: false).fetchUserDetailsFromFireStore(FirebaseAuth.instance.currentUser!.email!);
@@ -50,121 +54,141 @@ class _UploadPostState extends State<UploadPost> {
     // if (currentUser != null) {
     //   String username = currentUser.userName;
 
-    //   PostModel newPost = PostModel(
-    //       username: username,
-    //       caption: _captionController.text,
-    //       imagePath: imagePath!,
-    //       timestamp: DateTime.now(),
-    //       likes: [],
-    //       comments: []);
+    PostModel newPost = PostModel(
+        username: username,
+        caption: _captionController.text,
+        imagePath: imagePath!,
+        timestamp: DateTime.now(),
+        likes: [],
+        comments: []);
 
-    //       FirebaseFirestore.instance.collection('posts').add(newPost.toJson()).then((value) {
-    //         print('post added');
-    //       }).onError((error, stackTrace) {
-    //         print(error.toString());
-    //       });
+    FirebaseFirestore.instance
+        .collection('posts')
+        .add(newPost.toJson())
+        .then((value) {
+      print('post added');
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
     // }
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('upload'),
-      ),
-      body: Center(
-          child: SingleChildScrollView(
-        child: Padding(
-            padding: EdgeInsets.all(size.width / 16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: size.width * .7,
-                  height: size.width * .8,
-                  decoration: imagePath != null
-                      ? BoxDecoration(
-                          image: DecorationImage(
-                            image: FileImage(File(imagePath!)),
-                            fit: BoxFit.cover,
+    return FutureBuilder(
+      future: getUserDataByEmail(FirebaseAuth.instance.currentUser!.email!),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text("Error ${snapshot.error}");
+        } else if (snapshot.hasData && snapshot.data != null) {
+          final userData = snapshot.data!.data() as Map<String, dynamic>;
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('upload'),
+            ),
+            body: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(size.width / 16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: size.width * .7,
+                        height: size.width * .8,
+                        decoration: imagePath != null
+                            ? BoxDecoration(
+                                image: DecorationImage(
+                                  image: FileImage(File(imagePath!)),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              )
+                            : BoxDecoration(
+                                color: const Color.fromARGB(255, 21, 21, 21),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                      ),
+                      SizedBox(
+                        height: size.width * .02,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              selectImage('camera', userData["username"]);
+                            },
+                            child: const CircleAvatar(
+                              // backgroundColor: kRedColor,
+                              child: Icon(
+                                Icons.camera_alt_outlined,
+                                size: 35,
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(10),
-                        )
-                      : BoxDecoration(
-                          color: const Color.fromARGB(255, 21, 21, 21),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                ),
-                SizedBox(
-                  height: size.width * .02,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        selectImage('camera');
-                      },
-                      child: const CircleAvatar(
-                        // backgroundColor: kRedColor,
-                        child: Icon(
-                          Icons.camera_alt_outlined,
-                          size: 35,
-                        ),
+                          SizedBox(
+                            width: size.width / 16,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              selectImage('gallery', userData["username"]);
+                            },
+                            child: const CircleAvatar(
+                              // backgroundColor: kRedColor,
+                              child: Icon(
+                                Icons.photo_library_outlined,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      width: size.width / 16,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        selectImage('gallery');
-                      },
-                      child: const CircleAvatar(
-                        // backgroundColor: kRedColor,
-                        child: Icon(
-                          Icons.photo_library_outlined,
-                          size: 35,
-                        ),
+                      SizedBox(
+                        height: size.width / 16,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: size.width / 16,
-                ),
-                SizedBox(
-                  width: double.maxFinite,
-                  height: size.width * .15,
-                  child: TextField(
-                    maxLines: 100,
-                    decoration: InputDecoration(
-                        fillColor: const Color.fromARGB(255, 30, 29, 29)
-                            .withOpacity(.6),
-                        filled: true,
-                        hintText: 'Caption',
-                        // hin,
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: size.width * .15,
+                        child: TextField(
+                          controller: _captionController,
+                          maxLines: 100,
+                          decoration: InputDecoration(
+                              fillColor: const Color.fromARGB(255, 30, 29, 29)
+                                  .withOpacity(.6),
+                              filled: true,
+                              hintText: 'Caption',
+                              // hin,
 
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.width / 16,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            addPostToFirestore(userData["username"]);
+                          },
+                          child: const Text(
+                            'Post',
+                            style: TextStyle(fontSize: 20),
+                          ))
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: size.width / 16,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      addPostToFirestore();
-                    },
-                    child: const Text(
-                      'Post',
-                      style: TextStyle(fontSize: 20),
-                    ))
-              ],
-            )),
-      )),
+              ),
+            ),
+          );
+        } else {
+          return Text('data');
+        }
+      },
     );
   }
 }
