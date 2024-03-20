@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_app/model/post/post_model.dart';
@@ -25,8 +26,7 @@ class _UploadPostState extends State<UploadPost> {
   final TextEditingController _captionController = TextEditingController();
   String dropdownLocationValue = 'S1 Football Court';
   int dropdownNoValue = 1;
-  TimeOfDay startTime = TimeOfDay.now();
-  TimeOfDay endTime = TimeOfDay.now();
+  List<DateTime>? startEndDateTime;
 
   Future<void> selectImage(String clicked, String username) async {
     final XFile? imagePicked;
@@ -169,53 +169,64 @@ class _UploadPostState extends State<UploadPost> {
                       SizedBox(
                         height: size.width / 16,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Start Time ${startTime.hour}:${startTime.minute}',
-                                style: TextStyle(fontSize: size.width / 20),
-                              ),
-                              ElevatedButton(
-                                 child: const Text('Select Start Time'),
-                                 onPressed: () async {
-                                   TimeOfDay? time = await showTimePicker(
-                                     context: context,
-                                     initialTime: startTime,
-                                   );
-                                   if (time != null)
-                                     setState(() {
-                                       startTime = time;
-                                     });
-                                 },
-                                 )
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'End Time ${endTime.hour}:${endTime.minute}',
-                                style: TextStyle(fontSize: size.width / 20),
-                              ),
-                              ElevatedButton(
-                                 child: const Text('Select End Time'),
-                                 onPressed: () async {
-                                   TimeOfDay? time = await showTimePicker(
-                                     context: context,
-                                     initialTime: endTime,
-                                   );
-                                   if (time != null)
-                                     setState(() {
-                                       endTime = time;
-                                     });
-                                 },
-                                 )
-                            ],
-                          ),
+                          
+                          ElevatedButton(
+                            child: const Text('Select Time Range'),
+                            onPressed: () async {
+                               startEndDateTime =
+                                  await showOmniDateTimeRangePicker(
+                                context: context,
+                                startInitialDate: DateTime.now(),
+                                startFirstDate: DateTime(1600)
+                                    .subtract(const Duration(days: 3652)),
+                                startLastDate: DateTime.now().add(
+                                  const Duration(days: 3652),
+                                ),
+                                endInitialDate: DateTime.now(),
+                                endFirstDate: DateTime(1600)
+                                    .subtract(const Duration(days: 3652)),
+                                endLastDate: DateTime.now().add(
+                                  const Duration(days: 3652),
+                                ),
+                                is24HourMode: false,
+                                isShowSeconds: false,
+                                minutesInterval: 1,
+                                secondsInterval: 1,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(16)),
+                                constraints: const BoxConstraints(
+                                  maxWidth: 350,
+                                  maxHeight: 650,
+                                ),
+                                transitionBuilder:
+                                    (context, anim1, anim2, child) {
+                                  return FadeTransition(
+                                    opacity: anim1.drive(
+                                      Tween(
+                                        begin: 0,
+                                        end: 1,
+                                      ),
+                                    ),
+                                    child: child,
+                                  );
+                                },
+                                transitionDuration:
+                                    const Duration(milliseconds: 200),
+                                barrierDismissible: true,
+                                selectableDayPredicate: (dateTime) {
+                                  // Disable 25th Feb 2023
+                                  if (dateTime == DateTime(2023, 2, 25)) {
+                                    return false;
+                                  } else {
+                                    return true;
+                                  }
+                                },
+                              );
+                            },
+                          )
                         ],
                       ),
                       SizedBox(
@@ -335,9 +346,9 @@ class _UploadPostState extends State<UploadPost> {
                                 _captionController.text,
                                 imageUrl!,
                                 dropdownNoValue,
-                                userData["name"],
-                                userData["email"],
-                                userData["followers"]);
+                                startEndDateTime![0],
+                                startEndDateTime![1],
+                                dropdownLocationValue);
                           },
                           child: const Text(
                             'Post',

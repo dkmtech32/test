@@ -7,8 +7,8 @@ class PostModel {
   final String imagePath;
   final String? caption;
   final int slotCount;
-  final TimeOfDay startTime;
-  final TimeOfDay endTime;
+  final DateTime startTime;
+  final DateTime endTime;
   final String location;
   final DateTime timestamp;
   final List<String> likes;

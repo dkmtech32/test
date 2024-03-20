@@ -5,8 +5,7 @@ import 'package:flutter_app/views/screens/navbar/nav_bar.dart';
 import 'package:get/get.dart';
 
 
-void addPostToFirestore(String username,String caption, String imageUrl, int slotCount, TimeOfDay startTime, TimeOfDay endTime, String location) async {
-
+void addPostToFirestore(String username,String caption, String imageUrl, int slotCount, DateTime startTime, DateTime endTime, String location) async {
     PostModel newPost = PostModel(
         username: username,
         caption: caption,
